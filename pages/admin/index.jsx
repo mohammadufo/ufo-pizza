@@ -1,19 +1,19 @@
-import axios from "axios";
-import Image from "next/image";
-import React, { useState } from "react";
-import styles from "../../styles/Admin.module.css";
+import axios from 'axios';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import styles from '../../styles/Admin.module.css';
 
 const Index = ({ products, orders }) => {
   const [pizzaList, setPizzaList] = useState(products);
   const [orderList, setOrderList] = useState(orders);
-  const status = ["preparing", "on the way", "delivered"];
+  const status = ['preparing', 'on the way', 'delivered'];
 
   const handleStatus = async (id) => {
     const item = orderList.filter((order) => order._id === id)[0];
     const currentStatus = item.status;
 
     try {
-      const res = await axios.put(`http://localhost:3000/api/orders/` + id, {
+      const res = await axios.put(`${process.env.MY_HOST}/api/orders/` + id, {
         status: currentStatus + 1,
       });
       setOrderList([
@@ -111,18 +111,18 @@ const Index = ({ products, orders }) => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
-  const myCookie = ctx.req?.cookies || "";
+  const myCookie = ctx.req?.cookies || '';
 
   if (myCookie.token !== process.env.TOKEN) {
     return {
       redirect: {
-        destination: "/admin/login",
+        destination: '/admin/login',
         permanent: false,
       },
     };
   }
-  const productRes = await axios.get(`http://localhost:3000/api/products`);
-  const orderRes = await axios.get(`http://localhost:3000/api/orders`);
+  const productRes = await axios.get(`${process.env.MY_HOST}/api/products`);
+  const orderRes = await axios.get(`${process.env.MY_HOST}/api/orders`);
 
   return {
     props: {

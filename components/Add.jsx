@@ -1,6 +1,6 @@
-import { useState } from "react";
-import styles from "../styles/Add.module.css";
-import axios from "axios";
+import { useState } from 'react';
+import styles from '../styles/Add.module.css';
+import axios from 'axios';
 
 const Add = ({ setClose }) => {
   const [file, setFile] = useState(null);
@@ -26,11 +26,11 @@ const Add = ({ setClose }) => {
 
   const handleCreate = async () => {
     const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "uploads");
+    data.append('file', file);
+    data.append('upload_preset', 'uploads');
     try {
       const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/military-amazona/image/upload",
+        'https://api.cloudinary.com/v1_1/military-amazona/image/upload',
         data
       );
 
@@ -43,7 +43,7 @@ const Add = ({ setClose }) => {
         img: url,
       };
 
-      await axios.post(`http://localhost:3000/api/products`, newProduct);
+      await axios.post(`${process.env.MY_HOST}/api/products`, newProduct);
       setClose(true);
     } catch (err) {
       console.log(err);

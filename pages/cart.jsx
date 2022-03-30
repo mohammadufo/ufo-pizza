@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import styles from "../styles/Cart.module.css";
-import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import styles from '../styles/Cart.module.css';
+import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   PayPalScriptProvider,
   PayPalButtons,
   usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { reset } from "../redux/cartSlice";
-import OrderDetail from "../components/OrderDetail";
+} from '@paypal/react-paypal-js';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { reset } from '../redux/cartSlice';
+import OrderDetail from '../components/OrderDetail';
 
 const Cart = () => {
   const [open, setOpen] = useState(false);
@@ -18,13 +18,13 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const amount = cart.total;
-  const currency = "USD";
-  const style = { layout: "vertical" };
+  const currency = 'USD';
+  const style = { layout: 'vertical' };
   const router = useRouter();
 
   const createOrder = async (data) => {
     try {
-      const res = await axios.post(`http://localhost:3000/api/orders`, data);
+      const res = await axios.post(`${process.env.MY_HOST}/api/orders`, data);
       if (res.status === 201) {
         dispatch(reset());
         router.push(`/orders/${res.data._id}`);
@@ -39,7 +39,7 @@ const Cart = () => {
 
     useEffect(() => {
       dispatch({
-        type: "resetOptions",
+        type: 'resetOptions',
         value: {
           ...options,
           currency: currency,
@@ -159,11 +159,11 @@ const Cart = () => {
               </button>
               <PayPalScriptProvider
                 options={{
-                  "client-id":
-                    "AQlxF7OHiOCtzf6t73A2sDsAdROdk4ahysb9K4xNNSphXZVGlP1knMUcBXKcXs8dioobpy-cdqUDhZY8",
-                  components: "buttons",
-                  currency: "USD",
-                  "disable-funding": "credit,card,p24",
+                  'client-id':
+                    'AQlxF7OHiOCtzf6t73A2sDsAdROdk4ahysb9K4xNNSphXZVGlP1knMUcBXKcXs8dioobpy-cdqUDhZY8',
+                  components: 'buttons',
+                  currency: 'USD',
+                  'disable-funding': 'credit,card,p24',
                 }}
               >
                 <ButtonWrapper currency={currency} showSpinner={false} />

@@ -1,9 +1,9 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import styles from "../../styles/Product.module.css";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/cartSlice";
+import Image from 'next/image';
+import React, { useState } from 'react';
+import styles from '../../styles/Product.module.css';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../redux/cartSlice';
 
 const Product = ({ pizza }) => {
   const [size, setSize] = useState(0);
@@ -99,7 +99,7 @@ const Product = ({ pizza }) => {
 
 export const getServerSideProps = async ({ params }) => {
   const res = await axios.get(
-    `http://localhost:3000/api/products/${params.id}`
+    `${process.env.MY_HOST}/api/products/${params.id}`
   );
   return {
     props: {
