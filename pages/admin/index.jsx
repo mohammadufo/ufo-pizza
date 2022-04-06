@@ -13,7 +13,7 @@ const Index = ({ products, orders }) => {
     const currentStatus = item.status;
 
     try {
-      const res = await axios.put(`${process.env.MY_HOST}/api/orders/` + id, {
+      const res = await axios.put(`http://localhost:3000/api/orders/` + id, {
         status: currentStatus + 1,
       });
       setOrderList([
@@ -121,8 +121,8 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  const productRes = await axios.get(`${process.env.MY_HOST}/api/products`);
-  const orderRes = await axios.get(`${process.env.MY_HOST}/api/orders`);
+  const productRes = await axios.get(`http://localhost:3000/api/products`);
+  const orderRes = await axios.get(`http://localhost:3000/api/orders`);
 
   return {
     props: {
